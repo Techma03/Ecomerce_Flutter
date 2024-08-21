@@ -1,4 +1,4 @@
-# igest
+# Shopi Store
 
 A new Flutter project.
 
