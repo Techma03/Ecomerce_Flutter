@@ -45,11 +45,11 @@ class _DetailState extends State<Detail> {
                                     borderRadius: BorderRadius.circular(100))
                                 // fixedSize: Size(10, 20),
                                 ),
-                            child: Icon(
+                            child: const Icon(
                               Icons.arrow_back_rounded,
                               size: 17,
                             )),
-                        Text(
+                        const Text(
                           " Jordan ",
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.w600),

@@ -4,6 +4,7 @@ import 'package:igest/src/theme/color.dart';
 import 'package:igest/src/widgets/produit.dart';
 import 'package:igest/src/widgets/scrowll.dart';
 import 'package:igest/src/widgets/search.dart';
+import 'package:igest/src/widgets/toolslist.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,20 +22,20 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-                padding: EdgeInsets.all(6),
+                padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
                   color: ColorPalette().widgetBg,
                   borderRadius: BorderRadius.circular(16), // Arrondir les coins
                 ),
-                child: Icon(Icons.menu)),
-            Text("My BigShop"),
+                child: const Icon(Icons.menu)),
+            const Text("My BigShop"),
             Container(
-                padding: EdgeInsets.all(6),
+                padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
                   color: ColorPalette().widgetBg,
                   borderRadius: BorderRadius.circular(16), // Arrondir les coins
                 ),
-                child: Icon(Icons.store))
+                child: const Icon(Icons.store))
           ],
         ),
         backgroundColor: Colors.white,
@@ -51,7 +52,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           const SearchProduct(),
           Padding(
-            padding: EdgeInsets.only(left: 17.0, right: 17.0),
+            padding: const EdgeInsets.only(left: 17.0, right: 17.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -61,20 +62,21 @@ class _HomePageState extends State<HomePage> {
                       Icons.place,
                       color: ColorPalette().widgetBt,
                     ), // Icône de localisation
-                    SizedBox(
+                    const SizedBox(
                         width: 8.0), // Espacement entre l'icône et le texte
-                    Text("Goma City, Katoyi Ndosho"), // Texte à côté de l'icône
+                    const Text(
+                        "Goma City, Katoyi Ndosho"), // Texte à côté de l'icône
                   ],
                 ),
-                Icon(Icons.arrow_back_ios_rounded),
+                const Icon(Icons.arrow_back_ios_rounded),
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          Scrowll(),
-          SizedBox(
+          const Scrowll(),
+          const SizedBox(
             height: 10,
           ),
           Container(
@@ -105,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                     width: 130,
                     color: ColorPalette().widgetbk,
                     child: Padding(
-                      padding: EdgeInsets.only(top: 15),
+                      padding: const EdgeInsets.only(top: 15),
                       child: Column(
                         children: [
                           Text(
@@ -122,7 +124,7 @@ class _HomePageState extends State<HomePage> {
                               fontWeight: FontWeight.w400,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 7,
                           ),
                           ElevatedButton(
@@ -133,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                                       builder: (context) => const Detail()));
                             },
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: ColorPalette().widgetBt),
+                                backgroundColor: ColorPalette().widgetBp),
                             child: Text(
                               "Achèter",
                               style: TextStyle(
@@ -153,7 +155,34 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: Container(
               color: ColorPalette().widgetBw,
-              child: const Produit(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Nouveau Produit",
+                          style: TextStyle(
+                            color: ColorPalette().widgetbk,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        Text(
+                          "Voir +",
+                          style: TextStyle(
+                            color: ColorPalette().widgetBt,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  const Expanded(child: Composentlist()),
+                ],
+              ),
             ),
           )
         ],

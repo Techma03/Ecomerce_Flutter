@@ -57,30 +57,37 @@ class _ScrowllState extends State<Scrowll> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100, // Ajuste la hauteur pour bien afficher les images
+      height: 80, // Ajuste la hauteur pour bien afficher les images
       width: double.infinity, // Ajuste la largeur pour être responsive
-      color: ColorPalette().widgetBt,
+      color: ColorPalette().widgetBw,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
           children: photoProfils.map((e) {
             return Container(
               margin: const EdgeInsets.only(left: 10),
-              child: Column(
-                children: [
-                  Container(
-                    height: 50,
-                    width: 50,
-                    color: ColorPalette().widgetbk,
-                    child: CircleAvatar(
-                      radius: 25, // Ajuste la taille de l'avatar
-                      backgroundImage: AssetImage(e['profil']),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 15.0),
+                child: Column(
+                  children: [
+                    // SizedBox(height: 8),
+                    Container(
+                      padding: EdgeInsets.all(2),
+                      height: 50,
+                      width: 50,
+                      decoration: BoxDecoration(
+                          color: ColorPalette().widgetBp,
+                          shape: BoxShape.circle),
+                      child: CircleAvatar(
+                        radius: 25, // Ajuste la taille de l'avatar
+                        backgroundImage: AssetImage(e['profil']),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 5), // Ajoute un espacement
-                  Text(e['nom']),
-                  Text(e['prix']),
-                ],
+                    // const SizedBox(height: 5), // Ajoute un espacement
+                    // Text(e['nom']),
+                    // Text(e['prix']),
+                  ],
+                ),
               ),
             );
           }).toList(), // Convertit le résultat du map en liste
