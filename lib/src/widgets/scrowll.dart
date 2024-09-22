@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:igest/src/theme/color.dart';
+import 'dart:convert' as convert;
+
+import 'package:http/http.dart' as http;
 
 class Scrowll extends StatefulWidget {
   const Scrowll({super.key});
@@ -76,7 +79,7 @@ class _ScrowllState extends State<Scrowll> {
                       height: 50,
                       width: 50,
                       decoration: BoxDecoration(
-                          color: ColorPalette().widgetBp,
+                          color: ColorPalette().widgetBo,
                           shape: BoxShape.circle),
                       child: CircleAvatar(
                         radius: 25, // Ajuste la taille de l'avatar

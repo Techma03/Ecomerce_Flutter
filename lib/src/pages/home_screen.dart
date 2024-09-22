@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:igest/src/pages/achat.dart';
 import 'package:igest/src/pages/detail.dart';
 import 'package:igest/src/theme/color.dart';
-import 'package:igest/src/widgets/produit.dart';
+import 'package:igest/src/widgets/drawer.dart';
 import 'package:igest/src/widgets/scrowll.dart';
 import 'package:igest/src/widgets/search.dart';
 import 'package:igest/src/widgets/toolslist.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,13 +23,13 @@ class _HomePageState extends State<HomePage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-                padding: const EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  color: ColorPalette().widgetBg,
-                  borderRadius: BorderRadius.circular(16), // Arrondir les coins
-                ),
-                child: const Icon(Icons.menu)),
+            // Container(
+            //     padding: const EdgeInsets.all(6),
+            //     decoration: BoxDecoration(
+            //       color: ColorPalette().widgetBg,
+            //       borderRadius: BorderRadius.circular(16), // Arrondir les coins
+            //     ),
+            //     child: const Icon(Icons.menu)),
             const Text("My BigShop"),
             Container(
                 padding: const EdgeInsets.all(6),
@@ -41,7 +43,12 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
-        automaticallyImplyLeading: false, // Désactiver le bouton retour
+        //automaticallyImplyLeading: false, // Désactiver le bouton retour
+      ),
+      drawer: const Drawer(
+        shadowColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        child: Pannel(),
       ),
       backgroundColor: Colors.white,
       body:
@@ -60,7 +67,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Icon(
                       Icons.place,
-                      color: ColorPalette().widgetBt,
+                      color: ColorPalette().widgetBb,
                     ), // Icône de localisation
                     const SizedBox(
                         width: 8.0), // Espacement entre l'icône et le texte
@@ -135,7 +142,7 @@ class _HomePageState extends State<HomePage> {
                                       builder: (context) => const Detail()));
                             },
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: ColorPalette().widgetBp),
+                                backgroundColor: ColorPalette().widgetBb),
                             child: Text(
                               "Achèter",
                               style: TextStyle(
@@ -170,11 +177,19 @@ class _HomePageState extends State<HomePage> {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        Text(
-                          "Voir +",
-                          style: TextStyle(
-                            color: ColorPalette().widgetBt,
-                            fontWeight: FontWeight.w600,
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Acaht()));
+                          },
+                          child: Text(
+                            "Voir +",
+                            style: TextStyle(
+                              color: ColorPalette().widgetBo,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         )
                       ],

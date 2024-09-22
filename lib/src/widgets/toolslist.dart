@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:igest/src/pages/detail.dart';
 import 'package:igest/src/theme/color.dart';
+import 'package:http/http.dart' as http;
 
 class Composentlist extends StatefulWidget {
   const Composentlist({super.key});
@@ -13,25 +15,29 @@ final List objets = [
     'nom': 'Produit 1',
     'image': 'asset/shoe4.jpg',
     'icon': 'Icons.favorite_border_rounded',
-    'route': 'Detail()',
+    'prix': 'CDF 125.000',
+    'route': Detail(), // Make sure this points to a valid widget
   },
   {
     'nom': 'Produit 2',
     'image': 'asset/shoe9.jpg',
     'icon': 'Icons.favorite_border_rounded',
-    'route': 'Detail()',
+    'prix': 'CDF 125.000',
+    'route': Detail(),
   },
   {
-    'nom': 'Produit 2',
+    'nom': 'Produit 3',
     'image': 'asset/shoe10.jpg',
     'icon': 'Icons.favorite_border_rounded',
-    'route': 'Detail()',
+    'prix': 'CDF 125.000',
+    'route': Detail(),
   },
   {
-    'nom': 'Produit 2',
+    'nom': 'Produit 4',
     'image': 'asset/shoes.jpg',
     'icon': 'Icons.favorite_border_rounded',
-    'route': 'Detail()',
+    'prix': 'CDF 125.000',
+    'route': Detail(),
   }
 ];
 
@@ -43,81 +49,58 @@ class _ComposentlistState extends State<Composentlist> {
           crossAxisCount: 2,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
-          childAspectRatio: 2),
+          childAspectRatio: 1), // Adjust this for better proportions
       itemCount: objets.length,
       itemBuilder: (context, index) {
         return Card(
+          color: ColorPalette().widgetBg,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           child: InkWell(
             onTap: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => objets[index]['route']));
+                context,
+                MaterialPageRoute(builder: (context) => objets[index]['route']),
+              );
             },
-            child: Center(
-              child: ListTile(
-                leading: Image.asset(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
                   objets[index]['image'],
-                  width: 40,
-                  height: 40,
+                  width: double.infinity,
+                  height: 100, // Adjust height as needed
+                  fit: BoxFit.cover, // Ensures the image covers the area
                 ),
-                title: Text(objets[index]['nom']),
-              ),
+                const SizedBox(height: 8), // Space between image and text
+                Text(
+                  objets[index]['nom'],
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  objets[index]['prix'],
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: ColorPalette().widgetBo,
+                  ),
+                ),
+              ],
             ),
           ),
         );
       },
     );
-    // Container(
-    //   height: 100,
-    //   width: 100,
-    //   color: ColorPalette().widgetBg,
-    //   child: Column(
-    //     children: [
-    //       Container(
-    //         height: 100,
-    //         width: 100,
-    //         decoration: BoxDecoration(
-    //             color: ColorPalette().widgetBp,
-    //             borderRadius: BorderRadius.circular(14)),
-    //         child: Column(
-    //           mainAxisAlignment: MainAxisAlignment.center,
-    //           children: [
-    //             Stack(
-    //               children: [
-    //                 Image.asset(
-    //                   'asset/shoe7.jpg',
-    //                   fit: BoxFit.fill,
-    //                 ),
-    //                 Padding(
-    //                   padding: const EdgeInsets.only(
-    //                     top: 5,
-    //                   ),
-    //                   child: Container(
-    //                     height: 30,
-    //                     width: 30,
-    //                     decoration: BoxDecoration(
-    //                         color: ColorPalette().widgetBg,
-    //                         borderRadius: BorderRadius.circular(20)),
-    //                     child: IconButton(
-    //                       onPressed: () {},
-    //                       icon: Icon(
-    //                         Icons.favorite_border_rounded,
-    //                         color: ColorPalette().widgetBt,
-    //                         size: 15,
-    //                       ),
-    //                     ),
-    //                   ),
-    //                 ),
-    //               ],
-    //             ),
-    //           ],
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
 }
+
+// class Detail extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text('Detail Page')),
+//       body: Center(child: Text('Detail of the product')),
+//     );
+//   }
+// }

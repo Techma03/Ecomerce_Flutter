@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:igest/src/pages/achat.dart';
 import 'package:igest/src/pages/home_screen.dart';
 import 'package:igest/src/theme/color.dart';
+import 'package:http/http.dart' as http;
 
 class Detail extends StatefulWidget {
   const Detail({super.key});
@@ -11,160 +12,137 @@ class Detail extends StatefulWidget {
 }
 
 class _DetailState extends State<Detail> {
+  final List shoes = [
+    {
+      'nom': 'adidas',
+      'detail': 'jordan1 Dior',
+      'prix': 'CDF9,000',
+      'profil': 'asset/shoe4.jpg'
+    },
+    {
+      'nom': 'nike',
+      'detail': 'Adidas',
+      'prix': 'CDF70,000',
+      'profil': 'asset/shoes.jpg'
+    },
+    {
+      'nom': 'snikers',
+      'detail': 'jordan1 Dior',
+      'prix': 'CDF25,000',
+      'profil': 'asset/shoe9.jpg'
+    },
+    {
+      'nom': 'airforce',
+      'detail': 'jordan1 Dior',
+      'prix': 'CDF22,000',
+      'profil': 'asset/shoe10.jpg'
+    },
+    {
+      'nom': 'puma',
+      'detail': 'jordan1 Dior',
+      'prix': 'CDF53,000',
+      'profil': 'asset/shoes.jpg'
+    },
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: ColorPalette().widgetBw,
+      ),
+      backgroundColor: ColorPalette().widgetBw,
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.end,
+          Stack(
             children: [
-              Container(
-                height: 380,
-                width: 325,
-                decoration: BoxDecoration(
-                    color: ColorPalette().widgetBp,
-                    borderRadius: BorderRadius.circular(23)),
-                child: Padding(
-                  padding: EdgeInsets.only(top: 20, left: 5, right: 5),
-                  child: Column(children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const HomePage()));
-                            },
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(100))
-                                // fixedSize: Size(10, 20),
-                                ),
-                            child: const Icon(
-                              Icons.arrow_back_rounded,
-                              size: 17,
-                            )),
-                        const Text(
-                          " Jordan ",
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w600),
-                        ),
-                        ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(100)),
-                              // fixedSize: Size(20, 20),
-                            ),
-                            child: Icon(
-                              Icons.more_vert,
-                              size: 17,
-                            )),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      height: 300,
-                      width: 320,
-                      child: Image.asset(
-                        'asset/shoes.jpg',
-                        fit: BoxFit.fitWidth,
-                      ),
-                    )
-                  ]),
+              Image.asset(
+                'asset/shoes.jpg',
+                fit: BoxFit.fitWidth,
+              ),
+              const Text(
+                " Jordan ",
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
                 ),
-              )
+                textAlign: TextAlign.right,
+                textScaler: TextScaler.linear(2),
+              ),
             ],
           ),
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: 60,
-                  width: 60,
-                  decoration: BoxDecoration(
-                      color: ColorPalette().widgetBt,
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Image.asset(
-                    'asset/shoe9.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Container(
-                  height: 60,
-                  width: 60,
-                  decoration: BoxDecoration(
-                      color: ColorPalette().widgetBt,
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Image.asset(
-                    'asset/shoe9.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Container(
-                  height: 60,
-                  width: 60,
-                  decoration: BoxDecoration(
-                      color: ColorPalette().widgetBt,
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Image.asset(
-                    'asset/shoe9.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Container(
-                  height: 60,
-                  width: 60,
-                  decoration: BoxDecoration(
-                      color: ColorPalette().widgetBt,
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Image.asset(
-                    'asset/shoe9.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                )
-              ],
+          const SizedBox(
+            height: 10,
+          ),
+          Container(
+            height: 80, // Ajuste la hauteur pour bien afficher les images
+            width: double.infinity, // Ajuste la largeur pour être responsive
+            color: ColorPalette().widgetBw,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: shoes.map((e) {
+                  return Container(
+                    margin: const EdgeInsets.only(left: 10),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 15.0),
+                      child: Column(
+                        children: [
+                          // SizedBox(height: 8),
+                          Container(
+                            padding: const EdgeInsets.all(2),
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                                color: ColorPalette().widgetBo,
+                                shape: BoxShape.circle),
+                            child: CircleAvatar(
+                              radius: 15, // Ajuste la taille de l'avatar
+                              backgroundImage: AssetImage(e['profil']),
+                            ),
+                          ),
+                          // const SizedBox(height: 5), // Ajoute un espacement
+                          // Text(e['nom']),
+                          // Text(e['prix']),
+                        ],
+                      ),
+                    ),
+                  );
+                }).toList(), // Convertit le résultat du map en liste
+              ),
             ),
           ),
           Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.only(right: 6, left: 5),
+                padding: const EdgeInsets.only(right: 6, left: 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       "Jordan1Low",
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                     IconButton(
                         onPressed: () {},
+                        mouseCursor: MouseCursor.uncontrolled,
                         icon: Icon(
                           Icons.favorite_border_rounded,
-                          color: ColorPalette().widgetBp,
+                          color: ColorPalette().widgetBo,
                           size: 18,
                         )),
                   ],
                 ),
               ),
-              Padding(
+              const Padding(
                   padding: EdgeInsets.only(left: 6),
                   child: Text(
                     "CDF14,000",
                     style: TextStyle(fontWeight: FontWeight.w600),
                   )),
               Padding(
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -192,28 +170,6 @@ class _DetailState extends State<Detail> {
                   ],
                 ),
               ),
-              // Padding(
-              //   padding: EdgeInsets.all(3),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.end,
-              //     children: [
-              //       // Text(
-              //       //   "Taille",
-              //       //   style:
-              //       //       TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-              //       // ),
-              //       TextButton(
-              //           onPressed: () {},
-              //           child: Text(
-              //             "Voir",
-              //             style: TextStyle(
-              //                 fontWeight: FontWeight.w600,
-              //                 fontSize: 16,
-              //                 color: ColorPalette().widgetBt),
-              //           ))
-              //     ],
-              //   ),
-              // ),
               Padding(
                 padding: const EdgeInsets.only(top: 25, left: 10, right: 10),
                 child: Row(
@@ -223,48 +179,44 @@ class _DetailState extends State<Detail> {
                     ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                            side: BorderSide(color: ColorPalette().widgetBt)
+                            side: BorderSide(color: ColorPalette().widgetBb)
                             // fixedSize: Size.square(30)
                             ),
                         child: Icon(
                           Icons.chat_bubble_outline,
-                          color: ColorPalette().widgetBt,
+                          color: ColorPalette().widgetBb,
                           size: 15,
                         )),
                     ElevatedButton(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
-                          side: BorderSide(color: ColorPalette().widgetBt)
+                          side: BorderSide(color: ColorPalette().widgetBb)
                           // fixedSize: Size.square(30)
                           ),
                       child: Row(
                         children: [
                           Icon(
                             Icons.shopping_cart_outlined,
-                            color: ColorPalette().widgetBt,
+                            color: ColorPalette().widgetBb,
                             size: 15,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Text(
                             "Ajouter au Panier",
                             style: TextStyle(
-                                fontSize: 13, color: ColorPalette().widgetBt),
+                                fontSize: 13, color: ColorPalette().widgetBp),
                           )
                         ],
                       ),
                     ),
                     ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Acaht()));
-                        },
+                        onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                            side: BorderSide(color: ColorPalette().widgetBt),
-                            backgroundColor: Color.fromARGB(248, 15, 114, 4)
+                            side: BorderSide(color: ColorPalette().widgetBb),
+                            backgroundColor:
+                                const Color.fromARGB(255, 246, 199, 130)
                             // fixedSize: Size.square(30)
                             ),
                         child: Text(
@@ -272,7 +224,7 @@ class _DetailState extends State<Detail> {
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 13,
-                              color: ColorPalette().widgetBg),
+                              color: ColorPalette().widgetbk),
                         )),
                   ],
                 ),
