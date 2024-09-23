@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:igest/src/pages/objet.dart';
 import 'package:igest/src/theme/color.dart';
 import 'package:http/http.dart' as http;
 
@@ -9,6 +12,7 @@ class Acaht extends StatefulWidget {
   @override
   State<Acaht> createState() => _AcahtState();
 }
+
 
 final List element = [
   {
@@ -74,29 +78,50 @@ final List element = [
 ];
 
 class _AcahtState extends State<Acaht> {
+@override
+
+void initState (){
+  super.initState();
+  fetchObjet();
+}
+
+  Future <void> fetchObjet() async {
+    final url = Uri.parse("uri");
+    final response = await http.get(url);
+
+    if (response.statusCode == 200){
+      //passe
+    setState(() {
+      
+    });
+    }else{
+      //ne pass pas
+      print("erreur");
+    }
+  }
+   Future <void> addObjet() async {
+    final url = Uri.parse("uri");
+    final response = await http.post(
+      url,
+      headers: {'content-Type':'application/json'},
+      // body: covert.json.encode
+      );
+
+    if (response.statusCode == 200){
+      //passe
+   print("pass");
+   fetchObjet();
+    }else{
+      //ne pass pas
+      print("erreur");
+    } 
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        // leading: Text("Achat"),
-        // actions: [
-        //   ElevatedButton(
-        //     onPressed: () {},
-        //     style: ElevatedButton.styleFrom(
-        //         shape: RoundedRectangleBorder(
-        //           borderRadius: BorderRadius.circular(100),
-        //         ),
-        //         backgroundColor: Color.fromARGB(255, 255, 255, 255)
-        //         // disabledBackgroundColor: Color.fromARGB(210, 226, 22, 22)
-        //         // fixedSize: Size(20, 20),
-        //         ),
-        //     child: Icon(
-        //       Icons.more_vert,
-        //       size: 17,
-        //     ),
-        //   ),
-        // ],
+       
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

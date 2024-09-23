@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:igest/src/theme/color.dart';
+import 'package:igest/src/pa';
 
 class AjoutProd extends StatefulWidget {
   const AjoutProd({super.key});
@@ -62,7 +63,9 @@ class _AjoutProdState extends State<AjoutProd> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                addObjet
+                              },
                               style: ElevatedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12))),
