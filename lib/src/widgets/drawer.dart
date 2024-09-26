@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:igest/src/pages/achat.dart';
 import 'package:igest/src/pages/ajoutprod.dart';
 import 'package:igest/src/pages/detail.dart';
+import 'package:igest/src/pages/prod.dart';
 import 'package:igest/src/theme/color.dart';
 import 'package:igest/src/widgets/toolslist.dart';
 import 'package:http/http.dart' as http;
@@ -59,7 +60,7 @@ class _PannelState extends State<Pannel> {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Detail()));
+                    MaterialPageRoute(builder: (context) => const Prodval()));
               },
             ),
             ListTile(

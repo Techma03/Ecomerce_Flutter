@@ -1,8 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:igest/src/pages/objet.dart';
+import 'package:igest/src/pages/detail.dart';
+import 'package:igest/src/pages/formulaire.dart';
 import 'package:igest/src/theme/color.dart';
 import 'package:http/http.dart' as http;
 
@@ -13,254 +13,235 @@ class Acaht extends StatefulWidget {
   State<Acaht> createState() => _AcahtState();
 }
 
-
-final List element = [
-  {
-    'nom': 'Jordan',
-    'image': 'asset/shoe4.jpg',
-    'prix': 'CDF 38.000',
-  },
-  {
-    'nom': 'Jordan',
-    'image': 'asset/shoe4.jpg',
-    'prix': 'CDF 52.000',
-  },
-  {
-    'nom': 'Vans',
-    'image': 'asset/shoe9.jpg',
-    'prix': 'CDF 78.000',
-  },
-  {
-    'nom': 'Vans',
-    'image': 'asset/shoe9.jpg',
-    'prix': 'CDF 72.000',
-  },
-  {
-    'nom': 'Nike',
-    'image': 'asset/shoes.jpg',
-    'prix': 'CDF 10.000',
-  },
-  {
-    'nom': 'Nike',
-    'image': 'asset/shoes.jpg',
-    'prix': 'CDF 25.000',
-  },
-  {
-    'nom': 'aAzur',
-    'image': 'asset/shoe10.jpg',
-    'prix': 'CDF 10.000',
-  },
-  {
-    'nom': 'aAzur',
-    'image': 'asset/shoe10.jpg',
-    'prix': 'CDF 15.000',
-  },
-  {
-    'nom': 'Vans',
-    'image': 'asset/shoe9.jpg',
-    'prix': 'CDF 78.000',
-  },
-  {
-    'nom': 'Vans',
-    'image': 'asset/shoe9.jpg',
-    'prix': 'CDF 72.000',
-  },
-  {
-    'nom': 'Pusy',
-    'image': 'asset/shoe7.jpg',
-    'prix': 'CDF 18.000',
-  },
-  {
-    'nom': 'Pusy',
-    'image': 'asset/shoe7.jpg',
-    'prix': 'CDF 12.000',
-  },
-];
+List element = [];
 
 class _AcahtState extends State<Acaht> {
-@override
+  @override
+  void initState() {
+    super.initState();
+    fetchObjet();
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   fetchObjet();
+    // });
+  }
 
-void initState (){
-  super.initState();
-  fetchObjet();
-}
-
-  Future <void> fetchObjet() async {
-    final url = Uri.parse("uri");
+  // Fonction pour récupérer tous les produits depuis l'API
+  Future<void> fetchObjet() async {
+    final url = Uri.parse("http://127.0.0.1/bigshop/api.php");
     final response = await http.get(url);
 
-    if (response.statusCode == 200){
-      //passe
-    setState(() {
-      
-    });
-    }else{
-      //ne pass pas
-      print("erreur");
+    if (response.statusCode == 200) {
+      setState(() {
+        element = jsonDecode(response.body);
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('Erreur lors de la récupération des produits')),
+      );
     }
   }
-   Future <void> addObjet() async {
-    final url = Uri.parse("uri");
-    final response = await http.post(
-      url,
-      headers: {'content-Type':'application/json'},
-      // body: covert.json.encode
-      );
 
-    if (response.statusCode == 200){
-      //passe
-   print("pass");
-   fetchObjet();
-    }else{
-      //ne pass pas
-      print("erreur");
-    } 
+  // Fonction pour supprimer un produit avec son ID
+  Future<void> deleteObjet(int id_produit) async {
+    final url =
+        Uri.parse("http://127.0.0.1/bigshop/api.php?id_produit=$id_produit");
+    final response = await http.delete(
+      url,
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Produit supprimé avec succès')),
+      );
+      fetchObjet(); // Mise à jour de la liste après suppression
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('Erreur lors de la suppression du produit')),
+      );
+    }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-       
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
-              flex: 7,
-              child: Container(
-                color: ColorPalette().widgetBw,
-                height: 21,
-                width: 20,
-                child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                      childAspectRatio: 1),
-                  itemCount: element.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                        color: ColorPalette().widgetBg,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18)),
-                        child: InkWell(
-                            onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                        title: Text(
-                                          "",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: ColorPalette().widgetBo,
-                                          ),
-                                        ),
-                                        content: Text(
-                                          "Voulez-vous vraiment achter ?",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: ColorPalette().widgetbk,
-                                          ),
-                                        ),
-                                        actions: [
-                                          TextButton(
-                                              onPressed: () {
-                                                Navigator.pop(context, 'Oui');
-                                              },
-                                              child: const Text("Oui")),
-                                          TextButton(
-                                              onPressed: () {
-                                                Navigator.pop(context, 'non');
-                                              },
-                                              child: const Text("Non"))
-                                        ],
-                                      ));
-                            },
-                            child: Column(
+            flex: 7,
+            child: Container(
+              color: ColorPalette().widgetBw,
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 1),
+                itemCount: element.length,
+                itemBuilder: (context, index) {
+                  return Card(
+                    color: ColorPalette().widgetBg,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18)),
+                    child: InkWell(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Icon(
+                              Icons.shopping_bag_outlined,
+                              size: 40,
+                              color: Colors.blue,
+                            ),
+                            content: Text(
+                              'Voulez-vous voir plus de details ?',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: ColorPalette().widgetbk,
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Detail()));
+                                  Navigator.pop(context); // Fermer le dialogue
+                                },
+                                child: const Text(
+                                  "Oui",
+                                  style: TextStyle(color: Colors.blue),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  // Navigator.pop(context); // Fermer le dialogue
+                                },
+                                child: const Text("Non"),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      onDoubleTap: () {
+                        // Confirmation avant la suppression
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Icon(
+                              Icons.delete_forever,
+                              size: 40,
+                              color: Colors.red,
+                            ),
+                            content: Text(
+                              'Voulez-vous vraiment supprimer ce produit ?',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: ColorPalette().widgetbk,
+                              ),
+                            ),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  deleteObjet(element[index][
+                                      'id_produit']); // Supprimer le produit avec son
+                                  fetchObjet();
+                                  Navigator.pop(context); // Fermer le dialogue
+                                },
+                                child: const Text(
+                                  "Supprimer",
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context); // Fermer le dialogue
+                                },
+                                child: const Text("Annuler"),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Stack(children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Image.asset(
-                                  element[index]['image'],
-                                  height: 100,
-                                  width: double.infinity,
-                                  fit: BoxFit.cover,
-                                  // width: 100,
-                                  // height: 100,
-                                ),
-                                Text(
-                                  element[index]['nom'],
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    color: ColorPalette().widgetbk,
+                                Container(
+                                  height: 25,
+                                  width: 25,
+                                  decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(30)),
+                                  child: Center(
+                                    child: Text(
+                                      "${element[index]['stock']}",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600),
+                                    ),
                                   ),
                                 ),
-                                Text(
-                                  element[index]['prix'],
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 17,
-                                    color: ColorPalette().widgetBb,
-                                  ),
-                                )
                               ],
-                            )));
-                  },
-                ),
-              )),
-          Expanded(
-              flex: 1,
-              child: Container(
-                color: ColorPalette().widgetBw,
-                height: 21,
-                width: 20,
-                child: const Column(
-                    //   mainAxisAlignment: MainAxisAlignment.start,
-                    //   crossAxisAlignment: CrossAxisAlignment.start,
-                    //   children: [
-                    //     Text("Have a coupon code?"),
-                    //     SizedBox(
-                    //       height: 10,
-                    //     ),
-                    //     Center(
-                    //       child: Container(
-                    //         height: 40,
-                    //         width: 320,
-                    //         decoration: BoxDecoration(
-                    //           color: ColorPalette().widgetBp,
-                    //           borderRadius: BorderRadius.circular(20),
-                    //         ),
-                    //         child: Row(
-                    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //           children: [
-                    //             Padding(
-                    //               padding: EdgeInsets.only(left: 10),
-                    //               child: Text(
-                    //                 "Panier",
-                    //                 style: TextStyle(fontWeight: FontWeight.w700),
-                    //               ),
-                    //             ),
-                    //             TextButton(
-                    //                 onPressed: () {},
-                    //                 child: Row(
-                    //                   children: [
-                    //                     Text(
-                    //                       "Disponible",
-                    //                       style: TextStyle(
-                    //                           fontWeight: FontWeight.w400),
-                    //                     ),
-                    //                     Icon(
-                    //                       Icons.check_circle_sharp,
-                    //                       color: ColorPalette().widgetBt,
-                    //                     )
-                    //                   ],
-                    //                 ))
-                    //           ],
-                    //         ),
-                    //       ),
-                    //     )
-                    //   ],
+                            ),
+                            const Placeholder(
+                              color: Colors.purpleAccent,
+                              fallbackHeight: 100,
+                              fallbackWidth: 100,
+                            ),
+                          ]),
+                          Text(
+                            element[index]['name'],
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: ColorPalette().widgetbk,
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                "Prix : ${element[index]['price']}CDF",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 13,
+                                  color: ColorPalette().widgetBb,
+                                ),
+                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) => Formulaire());
+                                  },
+                                  icon:
+                                      const Icon(Icons.shopping_cart_outlined))
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-              )),
+                  );
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Container(
+              color: ColorPalette().widgetBw,
+            ),
+          ),
         ],
       ),
     );
