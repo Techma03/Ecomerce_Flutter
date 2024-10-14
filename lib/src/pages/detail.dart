@@ -5,45 +5,15 @@ import 'package:igest/src/theme/color.dart';
 import 'package:http/http.dart' as http;
 
 class Detail extends StatefulWidget {
-  const Detail({super.key});
-
+  // final namImage;
+  const Detail({super.key,});
+ 
   @override
   State<Detail> createState() => _DetailState();
 }
 
 class _DetailState extends State<Detail> {
-  final List shoes = [
-    {
-      'nom': 'adidas',
-      'detail': 'jordan1 Dior',
-      'prix': 'CDF9,000',
-      'profil': 'asset/shoe4.jpg'
-    },
-    {
-      'nom': 'nike',
-      'detail': 'Adidas',
-      'prix': 'CDF70,000',
-      'profil': 'asset/shoes.jpg'
-    },
-    {
-      'nom': 'snikers',
-      'detail': 'jordan1 Dior',
-      'prix': 'CDF25,000',
-      'profil': 'asset/shoe9.jpg'
-    },
-    {
-      'nom': 'airforce',
-      'detail': 'jordan1 Dior',
-      'prix': 'CDF22,000',
-      'profil': 'asset/shoe10.jpg'
-    },
-    {
-      'nom': 'puma',
-      'detail': 'jordan1 Dior',
-      'prix': 'CDF53,000',
-      'profil': 'asset/shoes.jpg'
-    },
-  ];
+  List shoes = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,12 +25,14 @@ class _DetailState extends State<Detail> {
         child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
           Stack(
             children: [
+              // Image(image: widget.namImage),
+            
               Image.asset(
                 'asset/shoes.jpg',
                 fit: BoxFit.fitWidth,
               ),
               const Text(
-                " Jordan ",
+                '',
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,

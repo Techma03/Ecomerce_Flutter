@@ -7,15 +7,37 @@ import 'package:igest/src/theme/color.dart';
 import 'package:http/http.dart' as http;
 
 class Acaht extends StatefulWidget {
-  const Acaht({super.key});
+  final String stockProduit;
+  final String categorieProduit;
+
+  const Acaht({
+    super.key,
+    required this.stockProduit,
+    required this.categorieProduit,
+  });
 
   @override
   State<Acaht> createState() => _AcahtState();
 }
 
 List element = [];
+List<Map<String, String>> images = [
+  {'categorieProduit': 'Chaussure', 'image': 'asset/News/0.jpg'},
+  {'categorieProduit': 'Vetement', 'image': 'asset/News/2.jpg'},
+  {'categorieProduit': 'Voiture', 'image': 'asset/News/1.jpg'},
+];
+
+String getImageForCategory(String category) {
+  final imageMap = images.firstWhere(
+      (element) => element['categorieProduit'] == category,
+      orElse: () => {'image': 'assets/images/default.png'} // Image par défaut
+      );
+  return imageMap['image']!;
+}
 
 class _AcahtState extends State<Acaht> {
+//  String imageUrl = getImageForCategory(category);
+
   @override
   void initState() {
     super.initState();
@@ -27,7 +49,7 @@ class _AcahtState extends State<Acaht> {
 
   // Fonction pour récupérer tous les produits depuis l'API
   Future<void> fetchObjet() async {
-    final url = Uri.parse("http://127.0.0.1/bigshop/api.php");
+    final url = Uri.parse("http://127.0.0.1/bigshop/api0.php?produit");
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -45,7 +67,7 @@ class _AcahtState extends State<Acaht> {
   // Fonction pour supprimer un produit avec son ID
   Future<void> deleteObjet(int id_produit) async {
     final url =
-        Uri.parse("http://127.0.0.1/bigshop/api.php?id_produit=$id_produit");
+        Uri.parse("http://127.0.0.1/bigshop/api0.php?id_produit=$id_produit");
     final response = await http.delete(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -62,6 +84,21 @@ class _AcahtState extends State<Acaht> {
             content: Text('Erreur lors de la suppression du produit')),
       );
     }
+  }
+
+  String? getImageUrl(String categorie) {
+    Map<String, String> images = {
+      'chaussure': 'asset/News/0.jpg',
+      'television':
+          'https://as1.ftcdn.net/v2/jpg/05/72/21/64/1000_F_572216419_uKyqMoj7Ok2eivywPWKyqK7szmD6MrVU.jpg',
+      'telephone':
+          'https://fr.shopping.rakuten.com/photo/16061013500_L_NOPAD.jpg',
+      'voiture':
+          'https://fr.shopping.rakuten.com/photo/modele-de-voiture-toyota-2005-en-alliage-moule-1-32-son-et-lumiere-modele-de-voiture-classique-de-luxe-jouet-de-collection-cadeau-1955696859_L_NOPAD.jpg',
+      'vetement':
+          'https://img.freepik.com/photos-gratuite/boutique-vetements-boutique-vetements-cintre-boutique-moderne_1150-8886.jpg?size=626&ext=jpg',
+    };
+    return images[categorie.toLowerCase()];
   }
 
   @override
@@ -109,11 +146,13 @@ class _AcahtState extends State<Acaht> {
                             actions: [
                               TextButton(
                                 onPressed: () {
+                                  Navigator.pop(context);
                                   Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => Detail()));
-                                  Navigator.pop(context); // Fermer le dialogue
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Detail(),
+                                    ),
+                                  );
                                 },
                                 child: const Text(
                                   "Oui",
@@ -186,7 +225,7 @@ class _AcahtState extends State<Acaht> {
                                   child: Center(
                                     child: Text(
                                       "${element[index]['stock']}",
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.w600),
                                     ),
@@ -194,6 +233,22 @@ class _AcahtState extends State<Acaht> {
                                 ),
                               ],
                             ),
+                            Visibility(
+                                visible: false,
+                                child: Text(
+                                  " ${element[index]['description']}",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: ColorPalette().widgetbk,
+                                  ),
+                                )),
+
+                            // Image.network(
+                            //   element[index]['image'] ??
+                            //       'https://cdn.prod.website-files.com/643149de01d4474ba64c7cdc/65428da5c4c1a2b9740cc088_20231101-ImageNonDisponible-v1.jpg', // URL par défaut si pas d'image
+                            //   width: 300,
+                            //   height: 100,
+                            // ),
                             const Placeholder(
                               color: Colors.purpleAccent,
                               fallbackHeight: 100,
@@ -222,7 +277,16 @@ class _AcahtState extends State<Acaht> {
                                   onPressed: () {
                                     showDialog(
                                         context: context,
-                                        builder: (context) => Formulaire());
+                                        builder: (context) => Formulaire(
+                                              nomProduit: element[index]
+                                                  ['name'],
+                                              categorieProduit: element[index]
+                                                  ['description'],
+                                              prixProduit: element[index]
+                                                  ['price'],
+                                              stockProduit: widget.stockProduit,
+                                              index: index,
+                                            ));
                                   },
                                   icon:
                                       const Icon(Icons.shopping_cart_outlined))

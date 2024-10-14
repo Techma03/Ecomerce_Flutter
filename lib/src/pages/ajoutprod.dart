@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:igest/src/theme/color.dart';
-import 'package:igest/src/pages/achat.dart ';
+import 'package:igest/src/pages/achat.dart';
 import 'package:http/http.dart' as http;
 
 class AjoutProd extends StatefulWidget {
@@ -25,7 +25,7 @@ class _AjoutProdState extends State<AjoutProd> {
   }
 
   Future<void> fetchObjet() async {
-    final url = Uri.parse("http://127.0.0.1/bigshop/api.php");
+    final url = Uri.parse("http://127.0.0.1/bigshop/api0.php");
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -38,10 +38,11 @@ class _AjoutProdState extends State<AjoutProd> {
   }
 
   Future<void> addObjet() async {
-    final url = Uri.parse("http://127.0.0.1/bigshop/api.php");
+    final url = Uri.parse("http://127.0.0.1/bigshop/api0.php");
+
     final response = await http.post(
       url,
-      headers: {'content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'name': produit.text,
         'price': prix.text,
@@ -50,38 +51,40 @@ class _AjoutProdState extends State<AjoutProd> {
       }),
     );
 
-if (stock == null || stock != 0) {
-      setState(() {
-        message = "";
-      });
-      return; // Stoppe l'exécution de la fonction si la validation échoue
-    }
-
-    if (prix == null || prix != 0) {
-      setState(() {
-        message = "Le prix doit être supérieur à 0.";
-      });
-      return; // Stoppe l'exécution de la fonction si la validation échoue
-    }
-
     if (response.statusCode == 200) {
-      //passe
+      // Passe
       print("pass");
-      // fetchObjet();
       final data = jsonDecode(response.body);
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('inserer avec succes')));
+          .showSnackBar(SnackBar(content: Text('inséré avec succès')));
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Acaht()),
+        MaterialPageRoute(
+          builder: (context) => Acaht(
+            stockProduit: stock.text,
+            categorieProduit: categorie.text,
+          ),
+        ),
       );
     } else {
-      //ne pass pas
+      // Ne passe pas
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
             content: Text('Erreur lors de l\'insertion de l\'utilisateur')),
       );
     }
+  }
+
+  
+
+//methode qui reinitialiser les champs
+  void effacer() {
+    setState(() {
+      produit.clear();
+      categorie.clear();
+      prix.clear();
+      stock.clear();
+    });
   }
 
   void checkPrice() {
@@ -115,7 +118,7 @@ if (stock == null || stock != 0) {
                 height: 550,
                 width: double.maxFinite,
                 decoration: BoxDecoration(
-                  color: ColorPalette().widgetBp,
+                  color: ColorPalette().widgetBg,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Padding(
@@ -166,7 +169,7 @@ if (stock == null || stock != 0) {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                checkPrice();
+                                //checkPrice();
                                 addObjet();
                               },
                               style: ElevatedButton.styleFrom(
@@ -181,12 +184,14 @@ if (stock == null || stock != 0) {
                               ),
                             ),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                effacer();
+                              },
                               style: ElevatedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12))),
                               child: const Text(
-                                "Supprimer ",
+                                "Effacer ",
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
@@ -204,7 +209,7 @@ if (stock == null || stock != 0) {
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color: ColorPalette().widgetbk, width: 0.3),
-                              color: ColorPalette().widgetBp,
+                              color: ColorPalette().widgetBg,
                             ),
                             child: const Padding(
                               padding: EdgeInsets.all(8.0),
@@ -226,7 +231,7 @@ if (stock == null || stock != 0) {
                             decoration: BoxDecoration(
                               border: Border.all(
                                   color: ColorPalette().widgetbk, width: 0.3),
-                              color: ColorPalette().widgetBp,
+                              color: ColorPalette().widgetBg,
                             ),
                             child: const Padding(
                               padding: EdgeInsets.all(8.0),

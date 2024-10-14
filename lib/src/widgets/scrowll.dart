@@ -23,7 +23,7 @@ class _ScrowllState extends State<Scrowll> {
       'nom': 'nike',
       'detail': 'Adidas',
       'prix': 'CDF70,000',
-      'profil': 'asset/shoes.jpg'
+      'profil': 'asset/News/2.jpg'
     },
     {
       'nom': 'snikers',
@@ -35,7 +35,7 @@ class _ScrowllState extends State<Scrowll> {
       'nom': 'airforce',
       'detail': 'jordan1 Dior',
       'prix': 'CDF22,000',
-      'profil': 'asset/shoe10.jpg'
+      'profil': 'asset/News/1.jpg'
     },
     {
       'nom': 'puma',

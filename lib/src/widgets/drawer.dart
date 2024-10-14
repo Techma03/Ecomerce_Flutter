@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:igest/src/pages/achat.dart';
 import 'package:igest/src/pages/ajoutprod.dart';
 import 'package:igest/src/pages/detail.dart';
+import 'package:igest/src/pages/login/logUser.dart';
+import 'package:igest/src/pages/login/signUp.dart';
 import 'package:igest/src/pages/prod.dart';
 import 'package:igest/src/theme/color.dart';
 import 'package:igest/src/widgets/toolslist.dart';
@@ -59,8 +61,15 @@ class _PannelState extends State<Pannel> {
               ),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Prodval()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Prodval(
+                              nomProduit: '',
+                              prixProduit: '',
+                              stockProduit: '',
+                              index: 0,
+                            )));
               },
             ),
             ListTile(
@@ -74,8 +83,13 @@ class _PannelState extends State<Pannel> {
               ),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Acaht()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Acaht(
+                              stockProduit: '',
+                              categorieProduit: '',
+                            )));
               },
             ),
             ListTile(
@@ -104,6 +118,42 @@ class _PannelState extends State<Pannel> {
               ),
               onTap: () {
                 Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.person_3,
+                size: 30,
+              ),
+              title: Text(
+                "LogIn",
+                style: TextStyle(color: ColorPalette().widgetbk, fontSize: 16),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()
+                        // Acaht(stockProduit: '', categorieProduit: '',)
+                        ));
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.people,
+                size: 30,
+              ),
+              title: Text(
+                "SignUp",
+                style: TextStyle(color: ColorPalette().widgetbk, fontSize: 16),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignupPage()
+                        // Acaht(stockProduit: '', categorieProduit: '',)
+                        ));
               },
             )
           ],

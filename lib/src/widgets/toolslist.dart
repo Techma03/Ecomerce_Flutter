@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:igest/src/pages/achat.dart';
 import 'package:igest/src/pages/detail.dart';
 import 'package:igest/src/theme/color.dart';
 import 'package:http/http.dart' as http;
@@ -10,24 +11,26 @@ class Composentlist extends StatefulWidget {
   State<Composentlist> createState() => _ComposentlistState();
 }
 
+var prod = objets[1];
+
 final List objets = [
   {
     'nom': 'Produit 1',
-    'image': 'asset/shoe4.jpg',
+    'image': 'asset/News/2.jpg',
     'icon': 'Icons.favorite_border_rounded',
     'prix': 'CDF 125.000',
     'route': Detail(), // Make sure this points to a valid widget
   },
   {
     'nom': 'Produit 2',
-    'image': 'asset/shoe9.jpg',
+    'image': 'asset/News/0.jpg',
     'icon': 'Icons.favorite_border_rounded',
     'prix': 'CDF 125.000',
     'route': Detail(),
   },
   {
     'nom': 'Produit 3',
-    'image': 'asset/shoe10.jpg',
+    'image': 'asset/News/2.jpg',
     'icon': 'Icons.favorite_border_rounded',
     'prix': 'CDF 125.000',
     'route': Detail(),
