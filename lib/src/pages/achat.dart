@@ -285,7 +285,8 @@ class _AcahtState extends State<Acaht> {
                                               prixProduit: element[index]
                                                   ['price'],
                                               stockProduit: widget.stockProduit,
-                                              index: index,
+                                              index: index, 
+                                              idProduit: '',
                                             ));
                                   },
                                   icon:

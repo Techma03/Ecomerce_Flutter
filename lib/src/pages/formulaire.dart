@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:igest/src/pages/prod.dart';
-import 'package:igest/src/theme/color.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:igest/src/widgets/toolslist.dart';
 
 class Formulaire extends StatefulWidget {
   final String nomProduit;
   final String categorieProduit;
   final String prixProduit;
   final String stockProduit;
+  final String idProduit;
   final int index;
 
   const Formulaire({
@@ -18,6 +16,7 @@ class Formulaire extends StatefulWidget {
     required this.categorieProduit,
     required this.prixProduit,
     required this.stockProduit,
+    required this.idProduit,
     required this.index,
   });
 
@@ -30,6 +29,7 @@ class _FormulaireState extends State<Formulaire> {
   var name;
   var price;
   var qteAcht;
+  var idProduit;
 
   // Liste des quantités disponibles
   final List<int> quantites = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -38,7 +38,6 @@ class _FormulaireState extends State<Formulaire> {
   @override
   void initState() {
     super.initState();
-    addProd();
     fetchprod();
   }
 
@@ -48,48 +47,49 @@ class _FormulaireState extends State<Formulaire> {
 
     if (response.statusCode == 200) {
       // Gérer la réponse API ici
-      setState(() {
-        // Mettre à jour la variable Product si nécessaire
-      });
+      if (mounted) {
+        setState(() {
+          // Mettre à jour la variable Product si nécessaire
+        });
+      }
     } else {
       print("Erreur lors de la récupération des produits");
     }
   }
 
   Future<void> addProd() async {
+    if (selectedQuantity == null) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Veuillez sélectionner une quantité')),
+        );
+      }
+      return;
+    }
+
     final url = Uri.parse("http://127.0.0.1/bigshop/api0.php?addOrder");
 
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
-        'name': widget.nomProduit, // Utilisation du widget pour les données
-        'price': widget.prixProduit,
-        'stock': widget.stockProduit,
+        'quantite': selectedQuantity.toString(),
+        'id_produit': widget.index.toString(),
       }),
     );
 
     if (response.statusCode == 200) {
-      print("Produit ajouté avec succès");
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Achat réussi')));
-
-      final data = jsonDecode(response.body);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Prodval(
-            nomProduit: widget.nomProduit,
-            prixProduit: widget.prixProduit,
-            stockProduit: widget.stockProduit,
-            index: widget.index,
-          ),
-        ),
-      );
+      if (mounted) {
+        print("Produit ajouté avec succès");
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Achat réussi')));
+      }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erreur lors de l\'achat du produit')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erreur lors de l\'achat du produit')),
+        );
+      }
     }
   }
 
@@ -133,7 +133,6 @@ class _FormulaireState extends State<Formulaire> {
               readOnly: true,
             ),
             SizedBox(height: 8),
-
             // Dropdown pour sélectionner la quantité
             DropdownButton<int>(
               value: selectedQuantity,
@@ -160,11 +159,12 @@ class _FormulaireState extends State<Formulaire> {
       ),
       actions: [
         TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              addProd(); // Correction ici
-            },
-            child: const Text("Valider la demande"))
+          onPressed: () {
+            Navigator.pop(context);
+            addProd(); // Ajout de la validation du produit
+          },
+          child: const Text("Valider la demande"),
+        )
       ],
     );
   }

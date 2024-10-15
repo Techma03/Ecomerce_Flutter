@@ -1,51 +1,75 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:igest/src/pages/home_screen.dart';
 import 'package:igest/src/pages/users.dart';
 import 'package:igest/src/theme/color.dart';
 import 'package:http/http.dart' as http;
 
 class SignupPage extends StatefulWidget {
+  //  final String pass;
+  // const SignupPage({super.key, required this.pass});
   @override
   State<SignupPage> createState() => _SignupPageState();
 }
 
 class _SignupPageState extends State<SignupPage> {
   TextEditingController nom = TextEditingController();
-
   TextEditingController email = TextEditingController();
-
   TextEditingController pass1 = TextEditingController();
-
   TextEditingController pass2 = TextEditingController();
 
   Future<void> addUser() async {
+    // Vérification que les mots de passe correspondent
+    if (pass1.text != pass2.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Les mots de passe ne correspondent pas')),
+      );
+      return;
+    }
+
+    // Vérification des champs vides
+    if (nom.text.isEmpty || email.text.isEmpty || pass1.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Veuillez remplir tous les champs')),
+      );
+      return;
+    }
+
     final urli = Uri.parse("http://127.0.0.1/bigshop/apiUser.php");
 
-    final response = await http.post(urli,
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(
-            {'nom': nom.text, 'e-mail': email.text, 'password': pass1.text}));
-    if (response.statusCode == 200) {
-      final data = jsonEncode(response.body);
-      print("passez avec succes");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('User inserted')),
-      );
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => userPage(),
-        ),
-      );
-    } else {
-      print("Erreur lors de l'insertion");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text('Erreur lors de l\'insertion de l\'utilisateur')),
-      );
-    }
+    final response = await http.post(
+      urli,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'nom': nom.text,
+        'email': email.text,
+        'password': pass1.text,
+      }),
+    );
+
+    setState(() {
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print("Inscription réussie : $data");
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Utilisateur inscrit avec succès')),
+        );
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => userPage(),
+          ),
+        );
+      } else {
+        print("Erreur lors de l'insertion");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(
+                  'Erreur lors de l\'inscription de l\'utilisateur. Veuillez réessayer.')),
+        );
+      }
+    });
   }
 
   @override
@@ -108,15 +132,12 @@ class _SignupPageState extends State<SignupPage> {
             const SizedBox(height: 32),
             ElevatedButton(
               onPressed: () {
-                // Action d'inscription
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const userPage()));
+                addUser();
               },
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 backgroundColor: const Color.fromARGB(255, 188, 208, 243),
                 textStyle: const TextStyle(fontSize: 18, color: Colors.black),
-                // iconColor: Colors.blueAccent,
               ),
               child: const Text('S\'inscrire'),
             ),

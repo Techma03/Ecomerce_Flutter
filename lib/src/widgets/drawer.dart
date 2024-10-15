@@ -5,6 +5,8 @@ import 'package:igest/src/pages/detail.dart';
 import 'package:igest/src/pages/login/logUser.dart';
 import 'package:igest/src/pages/login/signUp.dart';
 import 'package:igest/src/pages/prod.dart';
+import 'package:igest/src/pages/slide/slide.dart';
+import 'package:igest/src/pages/users.dart';
 import 'package:igest/src/theme/color.dart';
 import 'package:igest/src/widgets/toolslist.dart';
 import 'package:http/http.dart' as http;
@@ -118,6 +120,8 @@ class _PannelState extends State<Pannel> {
               ),
               onTap: () {
                 Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => userPage()));
               },
             ),
             ListTile(
@@ -152,6 +156,24 @@ class _PannelState extends State<Pannel> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => SignupPage()
+                        // Acaht(stockProduit: '', categorieProduit: '',)
+                        ));
+              },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.swap_horiz_rounded,
+                size: 30,
+              ),
+              title: Text(
+                "Slider",
+                style: TextStyle(color: ColorPalette().widgetbk, fontSize: 16),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => OnBoarding()
                         // Acaht(stockProduit: '', categorieProduit: '',)
                         ));
               },
