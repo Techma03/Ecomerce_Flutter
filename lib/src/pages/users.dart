@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:igest/src/pages/login/formul2.dart';
+import 'package:igest/src/pages/login/logUser.dart';
 import 'package:igest/src/theme/color.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -10,9 +12,8 @@ class userPage extends StatefulWidget {
   State<userPage> createState() => _userPageState();
 }
 
-List user = [];
-
 class _userPageState extends State<userPage> {
+  List user = [];
   @override
   void initState() {
     super.initState();
@@ -35,11 +36,34 @@ class _userPageState extends State<userPage> {
     }
   }
 
+  // Fonction pour supprimer un produit avec son ID
+  Future<void> deleteUser(int idUser) async {
+    final url = Uri.parse(
+        "http://127.0.0.1/bigshop/apiUser.php?idUser=$idUser"); // Correction du paramètre
+    final response = await http.delete(
+      url,
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('User supprimé avec succès')),
+      );
+      fetchUser(); // Mise à jour de la liste après suppression
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Erreur lors de la suppression du user')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: user.isEmpty
-          ? const Center(child: CircularProgressIndicator()) // Affichage d'un indicateur de chargement
+          ? const Center(
+              child:
+                  CircularProgressIndicator()) // Affichage d'un indicateur de chargement
           : GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 1,
@@ -55,13 +79,26 @@ class _userPageState extends State<userPage> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: InkWell(
+                    onDoubleTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) => PopFormul(
+                                nomUser: user[index]['nom'],
+                                emailUser: user[index]['email'],
+                              ));
+                    },
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => LoginPage()));
+                    },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(left: 20, right: 5),
+                              padding:
+                                  const EdgeInsets.only(left: 20, right: 5),
                               child: Text(
                                 "${index + 1}",
                                 style: const TextStyle(
@@ -75,7 +112,8 @@ class _userPageState extends State<userPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 13, top: 7),
+                                  padding:
+                                      const EdgeInsets.only(left: 13, top: 7),
                                   child: Text(
                                     "${user[index]['nom']}",
                                     style: const TextStyle(
@@ -93,7 +131,33 @@ class _userPageState extends State<userPage> {
                                 ),
                               ],
                             ),
-                            
+                            Expanded(
+                              flex: 3,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        deleteUser(user[index]['idUser']);
+                                        fetchUser();
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8))),
+                                      child: Text(
+                                        "Supprimer",
+                                        style: TextStyle(
+                                            color: Colors.red[500],
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ],

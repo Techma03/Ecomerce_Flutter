@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
       return; // Sortir de la méthode si les champs sont vides
     }
 
-    final url = Uri.parse("http://127.0.0.1/bigshop/login.php?login");
+    final url = Uri.parse("http://127.0.0.1/bigshop/login.php?checkUser");
 
     final response = await http.post(
       url,
