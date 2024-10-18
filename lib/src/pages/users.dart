@@ -14,6 +14,7 @@ class userPage extends StatefulWidget {
 
 class _userPageState extends State<userPage> {
   List user = [];
+
   @override
   void initState() {
     super.initState();
@@ -47,7 +48,7 @@ class _userPageState extends State<userPage> {
 
     if (response.statusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('User supprimé avec succès')),
+        SnackBar(content: Text('User  supprimé avec succès')),
       );
       fetchUser(); // Mise à jour de la liste après suppression
     } else {
@@ -85,6 +86,7 @@ class _userPageState extends State<userPage> {
                           builder: (context) => PopFormul(
                                 nomUser: user[index]['nom'],
                                 emailUser: user[index]['email'],
+                               // idUser: user[index]['idUser'],
                               ));
                     },
                     onTap: () {
