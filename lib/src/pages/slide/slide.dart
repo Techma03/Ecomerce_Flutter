@@ -15,38 +15,65 @@ class _OnBoardingState extends State<OnBoarding> {
     return CupertinoApp(
       debugShowCheckedModeBanner: false,
       home: OnBoardingSlider(
-        pageBackgroundColor: const Color.fromARGB(255, 188, 208, 243),
-        headerBackgroundColor: const Color.fromARGB(255, 188, 208, 243),
+        pageBackgroundColor: Colors.white,
+        headerBackgroundColor: Colors.white,
         finishButtonText: 'register',
         // onFinish: context,
         finishButtonStyle: const FinishButtonStyle(
-          backgroundColor: Colors.black,
+          backgroundColor: Color.fromARGB(255, 162, 184, 221),
         ),
-        skipTextButton: const Text('Skip'),
+        skipTextButton: Container(
+            height: 35,
+            width: 60,
+            decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 162, 184, 221),
+                borderRadius: BorderRadius.circular(7)),
+            child: const Center(
+                child: Text(
+              'Skip',
+              style: TextStyle(color: Colors.white),
+            ))),
         trailing: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            TextButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginPage()));
-                },
-                child: const Text(
-                  'Login',
-                  style: TextStyle(
-                      color: Colors.black,
-                      // backgroundColor: Colors.blue,
-                      decorationColor: Colors.amberAccent),
-                )),
-            TextButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SignupPage()));
-                },
-                child: const Text('Signup?',
+            Container(
+              height: 35,
+              width: 75,
+              decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 162, 184, 221),
+                  borderRadius: BorderRadius.circular(7)),
+              child: TextButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LoginPage()));
+                  },
+                  child: const Text(
+                    'Login',
                     style: TextStyle(
-                      color: Colors.blueAccent,
-                    ))),
+                        color: Colors.black,
+                        // backgroundColor: Colors.blue,
+                        decorationColor: Colors.amberAccent),
+                  )),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Container(
+              height: 35,
+              width: 80,
+              decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 162, 184, 221),
+                  borderRadius: BorderRadius.circular(7)),
+              child: TextButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SignupPage()));
+                  },
+                  child: const Text('Signup?',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ))),
+            ),
           ],
         ),
         background: [
@@ -54,19 +81,19 @@ class _OnBoardingState extends State<OnBoarding> {
             // padding: EdgeInsets.symmetric(horizontal: 40),
             height: 800,
             width: 400,
-            color: const Color.fromARGB(255, 188, 208, 243),
+            color: Colors.white,
           ),
           Container(
             // padding: EdgeInsets.symmetric(horizontal: 40),
             height: 800,
             width: 400,
-            color: const Color.fromARGB(255, 188, 208, 243),
+            color: Colors.white,
           ),
           Container(
             // padding: EdgeInsets.symmetric(horizontal: 40),
             height: 800,
             width: 400,
-            color: const Color.fromARGB(255, 188, 208, 243),
+            color: Colors.white,
           ),
         ],
         totalPage: 3,
@@ -92,10 +119,16 @@ class _OnBoardingState extends State<OnBoarding> {
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: const Column(
+            child: Column(
               children: <Widget>[
                 SizedBox(
                   height: 480,
+                  child: Image.asset(
+                    height: 920,
+                    width: 920,
+                    'asset/shoe8.jpg',
+                    // colorBlendMode: BlendMode.color,
+                  ),
                 ),
                 Text(
                   'Vendez vos produit et gagner plus',
@@ -106,10 +139,14 @@ class _OnBoardingState extends State<OnBoarding> {
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: const Column(
+            child: Column(
               children: <Widget>[
                 SizedBox(
                   height: 480,
+                  child: Image.asset(
+                    'asset/shoe6.jpg',
+                    // colorBlendMode: BlendMode.color,
+                  ),
                 ),
                 Text(
                   'Commencer dès maintenant',

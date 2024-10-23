@@ -6,6 +6,7 @@ import 'package:igest/src/pages/login/logUser.dart';
 import 'package:igest/src/pages/login/signUp.dart';
 import 'package:igest/src/pages/prod.dart';
 import 'package:igest/src/pages/slide/slide.dart';
+import 'package:igest/src/pages/slide/start.dart';
 import 'package:igest/src/pages/users.dart';
 import 'package:igest/src/theme/color.dart';
 import 'package:igest/src/widgets/toolslist.dart';
@@ -124,60 +125,60 @@ class _PannelState extends State<Pannel> {
                     MaterialPageRoute(builder: (context) => userPage()));
               },
             ),
-            ListTile(
-              leading: const Icon(
-                Icons.person_3,
-                size: 30,
-              ),
-              title: Text(
-                "LogIn",
-                style: TextStyle(color: ColorPalette().widgetbk, fontSize: 16),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginPage()
-                        // Acaht(stockProduit: '', categorieProduit: '',)
-                        ));
-              },
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.people,
-                size: 30,
-              ),
-              title: Text(
-                "SignUp",
-                style: TextStyle(color: ColorPalette().widgetbk, fontSize: 16),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SignupPage()
-                        // Acaht(stockProduit: '', categorieProduit: '',)
-                        ));
-              },
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.swap_horiz_rounded,
-                size: 30,
-              ),
-              title: Text(
-                "Slider",
-                style: TextStyle(color: ColorPalette().widgetbk, fontSize: 16),
-              ),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => OnBoarding()
-                        // Acaht(stockProduit: '', categorieProduit: '',)
-                        ));
-              },
-            )
+            // ListTile(
+            //   leading: const Icon(
+            //     Icons.person_3,
+            //     size: 30,
+            //   ),
+            //   title: Text(
+            //     "LogIn",
+            //     style: TextStyle(color: ColorPalette().widgetbk, fontSize: 16),
+            //   ),
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(builder: (context) => LoginPage()
+            //             // Acaht(stockProduit: '', categorieProduit: '',)
+            //             ));
+            //   },
+            // ),
+            // ListTile(
+            //   leading: const Icon(
+            //     Icons.people,
+            //     size: 30,
+            //   ),
+            //   title: Text(
+            //     "SignUp",
+            //     style: TextStyle(color: ColorPalette().widgetbk, fontSize: 16),
+            //   ),
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(builder: (context) => SignupPage()
+            //             // Acaht(stockProduit: '', categorieProduit: '',)
+            //             ));
+            //   },
+            // ),
+            // ListTile(
+            //   leading: const Icon(
+            //     Icons.swap_horiz_rounded,
+            //     size: 30,
+            //   ),
+            //   title: Text(
+            //     "Slider",
+            //     style: TextStyle(color: ColorPalette().widgetbk, fontSize: 16),
+            //   ),
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //     Navigator.push(
+            //         context,
+            //         MaterialPageRoute(builder: (context) => StartPage()
+            //             // Acaht(stockProduit: '', categorieProduit: '',)
+            //             ));
+            //   },
+            // )
           ],
         )
       ],

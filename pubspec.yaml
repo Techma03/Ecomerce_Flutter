@@ -42,6 +42,7 @@ flutter:
   assets:
     - asset/shoe4.jpg
     - asset/shoe5.jpg
+    - asset/shoe6.jpg
     - asset/shoe7.jpg
     - asset/shoe8.jpg
     - asset/shoe9.jpg
@@ -49,6 +50,8 @@ flutter:
     - asset/shoes.jpg
     - asset/profil1.jpg
     - asset/profil2.jpg
+    - asset/bb.jpg
+    - asset/nn.jpg
     - asset/News/
   #   - images/a_dot_ham.jpeg
 

@@ -1,18 +1,16 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:igest/src/pages/users.dart';
+
 class PopFormul extends StatefulWidget {
   final String nomUser;
   final String emailUser;
- // final int idUser;
 
   const PopFormul({
-    super.key, 
-    required this.nomUser, 
-    required this.emailUser, 
-   // required this.idUser
+    super.key,
+    required this.nomUser,
+    required this.emailUser,
   });
 
   @override
@@ -24,7 +22,7 @@ class _PopFormulState extends State<PopFormul> {
 
   String? _name;
   String? _email;
-   Int? _index;
+  int? _index; // Corrigé de Int à int
 
   @override
   void initState() {
@@ -32,29 +30,38 @@ class _PopFormulState extends State<PopFormul> {
     // Initialisation avec les valeurs actuelles
     _name = widget.nomUser;
     _email = widget.emailUser;
-    // _index = widget.idUser;
+    // nom = _name;
+    // mail = _email;
   }
 
+  void modif() {
+    nom = _name;
+    mail = _email;
+  }
+
+  String? nom;
+  String? mail;
+
   Future<void> updateUser() async {
+    modif();
     final url = Uri.parse("http://127.0.0.1/bigshop/apiUser.php?idUser=");
-    
+
     final response = await http.put(
       url,
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'nom': _name,
-        'email': _email,
-      }),
+      body: jsonEncode({'nom': nom, 'email': mail}),
     );
-    // iduser = _index;
-
+    modif();
     if (response.statusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Utilisateur modifié avec succès')),
       );
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const userPage()), // Assurez-vous que userPage soit const
+        MaterialPageRoute(
+          builder: (context) =>
+              const userPage(), // Assurez-vous que userPage soit bien défini
+        ),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -83,8 +90,10 @@ class _PopFormulState extends State<PopFormul> {
                 }
                 return null;
               },
-              onSaved: (value) {
-                _name = value;
+              onSaved: (value1) {
+                 setState(() {
+                   nom = value1;  // Met à jour l'email dans l'état
+                }); // Assigner à nom
               },
             ),
             TextFormField(
@@ -99,8 +108,10 @@ class _PopFormulState extends State<PopFormul> {
                 }
                 return null;
               },
-              onSaved: (value) {
-                _email = value;
+              onSaved: (value2) {
+                setState(() {
+                  mail = value2; // Met à jour l'email dans l'état
+                }); // Assigner à mail
               },
             ),
           ],
@@ -117,6 +128,7 @@ class _PopFormulState extends State<PopFormul> {
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               _formKey.currentState!.save(); // Enregistre les données
+              // initState();
               updateUser(); // Appelle la fonction de mise à jour après l'enregistrement
             }
           },
@@ -126,4 +138,3 @@ class _PopFormulState extends State<PopFormul> {
     );
   }
 }
-

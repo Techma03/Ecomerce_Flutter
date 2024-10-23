@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:igest/src/pages/home_screen.dart';
 import 'package:igest/src/pages/login/formul2.dart';
 import 'package:igest/src/pages/login/logUser.dart';
 import 'package:igest/src/theme/color.dart';
@@ -86,12 +87,12 @@ class _userPageState extends State<userPage> {
                           builder: (context) => PopFormul(
                                 nomUser: user[index]['nom'],
                                 emailUser: user[index]['email'],
-                               // idUser: user[index]['idUser'],
+                                // idUser: user[index]['idUser'],
                               ));
                     },
                     onTap: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => LoginPage()));
+                          MaterialPageRoute(builder: (context) => HomePage()));
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

@@ -16,14 +16,14 @@ var prod = objets[1];
 final List objets = [
   {
     'nom': 'Produit 1',
-    'image': 'asset/News/2.jpg',
+    'image': 'asset/News/0.jpg',
     'icon': 'Icons.favorite_border_rounded',
     'prix': 'CDF 125.000',
     'route': Detail(), // Make sure this points to a valid widget
   },
   {
     'nom': 'Produit 2',
-    'image': 'asset/News/0.jpg',
+    'image': 'asset/News/2.jpg',
     'icon': 'Icons.favorite_border_rounded',
     'prix': 'CDF 125.000',
     'route': Detail(),

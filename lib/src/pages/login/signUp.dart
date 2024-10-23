@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:igest/src/pages/login/logUser.dart';
 import 'package:igest/src/pages/users.dart';
 import 'package:igest/src/theme/color.dart';
 import 'package:http/http.dart' as http;
@@ -130,16 +131,47 @@ class _SignupPageState extends State<SignupPage> {
               ),
             ),
             const SizedBox(height: 32),
-            ElevatedButton(
-              onPressed: () {
-                addUser();
-              },
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                backgroundColor: const Color.fromARGB(255, 188, 208, 243),
-                textStyle: const TextStyle(fontSize: 18, color: Colors.black),
-              ),
-              child: const Text('S\'inscrire'),
+            Row(
+              children: [
+                Expanded(
+                  flex: 7,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      addUser();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      backgroundColor: const Color.fromARGB(255, 188, 208, 243),
+                      textStyle:
+                          const TextStyle(fontSize: 18, color: Colors.black),
+                    ),
+                    child: const Text('S\'inscrire'),
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Expanded(
+                  flex: 4,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => LoginPage()));
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
+                      backgroundColor: const Color.fromARGB(255, 188, 208, 243),
+                      textStyle:
+                          const TextStyle(fontSize: 18, color: Colors.black),
+                    ),
+                    child: const Text('Se connecter'),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

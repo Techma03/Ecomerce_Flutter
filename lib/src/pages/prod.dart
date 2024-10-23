@@ -104,9 +104,12 @@ class _ProdvalState extends State<Prodval> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Nom: ${produit['name']}'),
-                          Text('Prix: ${produit['price']} CDF'),
-                          Text('Stock: ${produit['stock']}'),
+                          Text('nom: ${produit['name']}'),
+                          Text('Quantite: ${produit['quantite']}'),
+                          Text(
+                          'Total: ${(produit['price']) * (produit['quantite'] ?? 0)} CDF'
+                        )
+
                         ],
                       ),
                     ),

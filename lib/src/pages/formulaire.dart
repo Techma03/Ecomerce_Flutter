@@ -35,6 +35,8 @@ class _FormulaireState extends State<Formulaire> {
   final List<int> quantites = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   int? selectedQuantity;
 
+  dynamic get nomProduit => widget.nomProduit;
+
   @override
   void initState() {
     super.initState();

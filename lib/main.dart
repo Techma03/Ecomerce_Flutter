@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:igest/src/pages/home_screen.dart';
+import 'package:igest/src/pages/slide/slide.dart';
+import 'package:igest/src/pages/slide/start.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: StartPage(),
     );
   }
 }

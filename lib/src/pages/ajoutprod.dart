@@ -37,7 +37,26 @@ class _AjoutProdState extends State<AjoutProd> {
     }
   }
 
+  // Liste des quantités disponibles
+  final List<String> quantites = [
+    'Accesoir',
+    'Chaussure',
+    'Vetement',
+    'Auto-mobile',
+    'Aliment',
+  ];
+  int? selectedQuantity;
+
   Future<void> addObjet() async {
+    if (selectedQuantity == null) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Veuillez sélectionner une quantité')),
+        );
+      }
+      return;
+    }
+
     final url = Uri.parse("http://127.0.0.1/bigshop/api0.php");
 
     final response = await http.post(
@@ -74,8 +93,6 @@ class _AjoutProdState extends State<AjoutProd> {
       );
     }
   }
-
-  
 
 //methode qui reinitialiser les champs
   void effacer() {

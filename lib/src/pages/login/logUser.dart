@@ -20,50 +20,58 @@ class _LoginPageState extends State<LoginPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Veuillez remplir tous les champs')),
       );
-      return; // Sortir de la méthode si les champs sont vides
+      return;
     }
 
-    final url = Uri.parse("http://127.0.0.1/bigshop/login.php?checkUser");
+    final url = Uri.parse("http://127.0.0.1/bigshop/apiUser.php?user");
 
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({
-        'email': email.text,
-        'password': password.text,
-      }),
-    );
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'email': email.text,
+          'password': password.text,
+        }),
+      );
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
 
-      if (data['message'] == 'Login successful') {
-        print("Connexion réussie : ${data['idUser']}");
+        if (data['message'] == 'Login successful') {
+          print("Connexion réussie : ${data['idUser']}");
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Connexion réussie')),
-        );
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Connexion réussie')),
+          );
 
-        // Rediriger vers la page principale de l'utilisateur après connexion
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                HomePage(), // Ou une autre page après connexion
-          ),
-        );
-      } else {
-        print("Identifiants incorrects");
+          // Rediriger vers la page principale après connexion
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomePage(),
+            ),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(data['message'])),
+          );
+        }
+      } else if (response.statusCode == 401) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
               content: Text('Identifiants incorrects. Veuillez réessayer.')),
         );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Erreur de connexion au serveur.')),
+        );
       }
-    } else {
-      print("Erreur de connexion au serveur");
+    } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Erreur lors de la tentative de connexion.')),
+        SnackBar(content: Text('Une erreur s\'est produite: $e')),
       );
+      print("Erreur: $e");
     }
   }
 
@@ -112,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(height: 16),
             TextField(
               controller: password,
-              obscureText: true,
+              // obscureText: true,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Mot de passe',
@@ -126,6 +134,8 @@ class _LoginPageState extends State<LoginPage> {
                 loginUser(); // Pas de Navigator.pop ici
               },
               style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 backgroundColor: const Color.fromARGB(255, 188, 208, 243),
                 textStyle: const TextStyle(fontSize: 18, color: Colors.black),
@@ -142,6 +152,9 @@ class _LoginPageState extends State<LoginPage> {
                 );
               },
               style: TextButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
+                padding: EdgeInsets.symmetric(vertical: 15),
                 iconColor: Colors.blueAccent,
               ),
               child: const Text('Créer un compte ?'),
@@ -152,5 +165,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
-
