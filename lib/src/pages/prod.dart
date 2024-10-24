@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:igest/src/theme/color.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:igest/src/widgets/toolslist.dart';
 
 class Prodval extends StatefulWidget {
   final String nomProduit;
   final String prixProduit;
-  final String stockProduit;
+  final int stockProduit;
   final int index; // Ajout de l'index
 
   const Prodval({
@@ -23,6 +24,9 @@ class Prodval extends StatefulWidget {
 
 class _ProdvalState extends State<Prodval> {
   List prodelem = [];
+//   var prix =produit[''];
+// var qte ;
+// final  total = prix
 
   @override
   void initState() {
@@ -70,6 +74,8 @@ class _ProdvalState extends State<Prodval> {
     }
   }
 
+  var prix;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,30 +92,50 @@ class _ProdvalState extends State<Prodval> {
               color: ColorPalette().widgetBw,
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
+                    crossAxisCount: 1,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 3,
-                    childAspectRatio: 1),
+                    childAspectRatio: 5),
                 itemCount: prodelem.length,
                 itemBuilder: (context, index) {
                   final produit = prodelem[index];
+                  final price = double.tryParse(produit['price'].toString());
+                  final quantite = int.tryParse(produit['quantite'].toString());
+                  final total = price! * quantite!;
                   return Card(
                     color: ColorPalette().widgetBg,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18)),
+                        borderRadius: BorderRadius.circular(8)),
                     child: InkWell(
                       onTap: () {
+                        print(
+                            'Price: $price, Quantité: $quantite, Total: total');
                         // Action à effectuer lorsque l'utilisateur clique sur le produit
                       },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('nom: ${produit['name']}'),
-                          Text('Quantite: ${produit['quantite']}'),
-                          Text(
-                          'Total: ${(produit['price']) * (produit['quantite'] ?? 0)} CDF'
-                        )
-
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('nom: ${produit['name']}'),
+                                Text('Quantite: ${produit['quantite']}'),
+                                Text('Total:  ${total} CDF')
+                              ],
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Card(
+                                color: Colors.deepPurpleAccent,
+                                margin: EdgeInsets.all(20),
+                                child: Text('Se connecter'),
+                              )
+                            ],
+                          )
                         ],
                       ),
                     ),

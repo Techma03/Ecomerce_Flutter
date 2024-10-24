@@ -67,10 +67,10 @@ class _PannelState extends State<Pannel> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const Prodval(
+                        builder: (context) => Prodval(
                               nomProduit: '',
                               prixProduit: '',
-                              stockProduit: '',
+                              stockProduit: 1,
                               index: 0,
                             )));
               },

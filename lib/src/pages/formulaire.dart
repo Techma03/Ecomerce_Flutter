@@ -75,7 +75,7 @@ class _FormulaireState extends State<Formulaire> {
       url,
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
-        'quantite': selectedQuantity.toString(),
+        'quantite': selectedQuantity,
         'id_produit': widget.index.toString(),
       }),
     );
@@ -162,8 +162,9 @@ class _FormulaireState extends State<Formulaire> {
       actions: [
         TextButton(
           onPressed: () {
-            Navigator.pop(context);
             addProd(); // Ajout de la validation du produit
+            Navigator.pop(context);
+            
           },
           child: const Text("Valider la demande"),
         )
