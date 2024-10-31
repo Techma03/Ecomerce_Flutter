@@ -99,17 +99,17 @@ class _ProdvalState extends State<Prodval> {
                 itemCount: prodelem.length,
                 itemBuilder: (context, index) {
                   final produit = prodelem[index];
-                  final price = double.tryParse(produit['price'].toString());
-                  final quantite = int.tryParse(produit['quantite'].toString());
-                  final total = price! * quantite!;
+                  // final price = double.tryParse(produit['price'].toString());
+                  // final quantite = int.tryParse(produit['quantite'].int());
+                  // final total = price! * quantite!;
                   return Card(
                     color: ColorPalette().widgetBg,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8)),
                     child: InkWell(
                       onTap: () {
-                        print(
-                            'Price: $price, Quantité: $quantite, Total: total');
+                       /// print(
+                          //  'Price: $price, Quantité: $quantite, Total: total');
                         // Action à effectuer lorsque l'utilisateur clique sur le produit
                       },
                       child: Row(
@@ -123,7 +123,7 @@ class _ProdvalState extends State<Prodval> {
                               children: [
                                 Text('nom: ${produit['name']}'),
                                 Text('Quantite: ${produit['quantite']}'),
-                                Text('Total:  ${total} CDF')
+                                Text('Total:  {total} CDF')
                               ],
                             ),
                           ),

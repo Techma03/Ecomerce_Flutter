@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
 //   {
 //     'nom': 'Jordan',
 //     'image': 'asset/shoe4.jpg',
-//     'prix': 'CDF 52.000',
+//     'prix': 'CDF 52.000',JK
 //   },
 //   {
 //     'nom': 'Vans',

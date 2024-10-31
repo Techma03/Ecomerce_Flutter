@@ -6,8 +6,9 @@ import 'package:http/http.dart' as http;
 
 class Detail extends StatefulWidget {
   // final namImage;
-  const Detail({super.key,});
- 
+  final String nom;
+  const Detail({super.key, required this.nom});
+
   @override
   State<Detail> createState() => _DetailState();
 }
@@ -26,12 +27,12 @@ class _DetailState extends State<Detail> {
           Stack(
             children: [
               // Image(image: widget.namImage),
-            
+
               Image.asset(
                 'asset/shoes.jpg',
                 fit: BoxFit.fitWidth,
               ),
-              const Text(
+              Text(
                 '',
                 style: TextStyle(
                   fontSize: 15,
@@ -92,8 +93,8 @@ class _DetailState extends State<Detail> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      "Jordan1Low",
+                    Text(
+                      "${widget.nom}",
                       style: TextStyle(fontWeight: FontWeight.w600),
                     ),
                     IconButton(

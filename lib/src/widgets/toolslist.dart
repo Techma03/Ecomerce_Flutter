@@ -19,28 +19,28 @@ final List objets = [
     'image': 'asset/News/0.jpg',
     'icon': 'Icons.favorite_border_rounded',
     'prix': 'CDF 125.000',
-    'route': Detail(), // Make sure this points to a valid widget
+    'route': Detail(nom: '',), // Make sure this points to a valid widget
   },
   {
     'nom': 'Produit 2',
     'image': 'asset/News/2.jpg',
     'icon': 'Icons.favorite_border_rounded',
     'prix': 'CDF 125.000',
-    'route': Detail(),
+    'route': Detail(nom: '',),
   },
   {
     'nom': 'Produit 3',
     'image': 'asset/News/2.jpg',
     'icon': 'Icons.favorite_border_rounded',
     'prix': 'CDF 125.000',
-    'route': Detail(),
+    'route': Detail(nom: '',),
   },
   {
     'nom': 'Produit 4',
     'image': 'asset/shoes.jpg',
     'icon': 'Icons.favorite_border_rounded',
     'prix': 'CDF 125.000',
-    'route': Detail(),
+    'route': Detail(nom: '',),
   }
 ];
 

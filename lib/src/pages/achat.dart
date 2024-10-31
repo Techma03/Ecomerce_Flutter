@@ -150,7 +150,9 @@ class _AcahtState extends State<Acaht> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => Detail(),
+                                      builder: (context) => Detail(
+                                        nom: widget.categorieProduit,
+                                      ),
                                     ),
                                   );
                                 },
@@ -285,7 +287,7 @@ class _AcahtState extends State<Acaht> {
                                               prixProduit: element[index]
                                                   ['price'],
                                               stockProduit: widget.stockProduit,
-                                              index: index, 
+                                              index: index,
                                               idProduit: '',
                                             ));
                                   },

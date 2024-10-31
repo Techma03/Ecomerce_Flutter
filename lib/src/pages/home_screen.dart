@@ -139,7 +139,7 @@ class _HomePageState extends State<HomePage> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const Detail()));
+                                      builder: (context) => const Detail(nom: '',)));
                             },
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: ColorPalette().widgetBb),
